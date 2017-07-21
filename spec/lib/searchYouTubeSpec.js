@@ -9,27 +9,27 @@ var getURLSearchParams = function(url) {
     }, {});
 };
 
-var hasSameShape = function(objectOne, objectTwo) {
-  if (Object.keys(objectOne).length !== Object.keys(objectTwo).length) {
-    return false;
-  }
-
-  for (var key in objectOne) {
-    if (!key in objectTwo) {
+  var hasSameShape = function(objectOne, objectTwo) {
+    if (Object.keys(objectOne).length !== Object.keys(objectTwo).length) {
       return false;
     }
 
-    if (typeof objectOne[key] !== typeof objectTwo[key]) {
-      return false;
+    for (var key in objectOne) {
+      if (!key in objectTwo) {
+        return false;
+      }
+
+      if (typeof objectOne[key] !== typeof objectTwo[key]) {
+        return false;
+      }
+
+      if (Object.prototype.toString.call(objectOne[key]) === '[object Object]') {
+        return hasSameShape(objectOne[key], objectTwo[key]);
+      }
     }
 
-    if (Object.prototype.toString.call(objectOne[key]) === '[object Object]') {
-      return hasSameShape(objectOne[key], objectTwo[key]);
-    }
-  }
-
-  return true;
-};
+    return true;
+  };
 
 describe('searchYouTube', function() {
   var requests, xhr;
